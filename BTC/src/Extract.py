@@ -37,7 +37,7 @@ args = parser.parse_args()
 print(f"Running with arguments: {args}")
 
 # load Binance API keys ------------------------------------------------
-filepath = "/home/benjamin/Folders_Python/Book/BTC/data/env/vars.env"
+filepath = "/home/benjamin/Folders_Python/Portfolio/BTC/data/env/vars.env"
 config = dotenv_values(filepath)
 
 try:
@@ -88,7 +88,7 @@ if args.output is None:
     output = "output"
 else:
     output = args.output
-outputfile = "/home/benjamin/Folders_Python/Book/BTC/data/extract/" + output + time_signature + ".csv"
+outputfile = "/home/benjamin/Folders_Python/Portfolio/BTC/data/extract/" + output + time_signature + ".csv"
     
 # donne des nouvelles
 print(f"Fetching data for {crypto} from {start_time} to {end_time} - interval: {args.interval}")
