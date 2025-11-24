@@ -71,7 +71,7 @@ time_signature = f"{crypto}-{start_time.year}-{start_time.month}-{start_time.day
 
 # interval
 if args.interval is None:
-    interval = Client.KLINE_INTERVAL_1MINUTE
+    interval = Client.KLINE_INTERVAL_1DAY
 else:
     interval = args.interval
     if interval == '1m':
@@ -88,7 +88,7 @@ if args.output is None:
     output = "output"
 else:
     output = args.output
-outputfile = "/home/benjamin/Folders_Python/Portfolio/BTC/data/extract/" + output + time_signature + ".csv"
+outputfile = "/home/benjamin/Folders_Python/Portfolio/BTC/data/extract/" + output + "-" + time_signature + ".csv"
     
 # donne des nouvelles
 print(f"Fetching data for {crypto} from {start_time} to {end_time} - interval: {args.interval}")
@@ -115,9 +115,11 @@ df['Open Time'] = pd.to_datetime(df['Open Time'], unit='ms')
 df['Close Time'] = pd.to_datetime(df['Close Time'], unit='ms')
 # Use the Open Time as the DataFrame index so plots use dates on the x-axis
 df.set_index('Open Time', inplace=True)
-    
-# save data to CSV
-df.to_csv(outputfile, index=False)
+    # ensure the index has a name so the CSV contains a proper header for the time column
+df.index.name = 'Open Time'
+
+# save data to CSV (include the index so 'Open Time' is preserved in the file)
+df.to_csv(outputfile, index=True)
 
 # plot extracted data -------------------------------------------------
 fig, ax = plt.subplots(nrows=4, ncols=1, figsize=(20, 12), sharex=True)
